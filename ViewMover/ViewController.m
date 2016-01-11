@@ -22,15 +22,24 @@
 
 - (IBAction)moveButtonTapped:(id)sender {
     [UIView animateWithDuration:0.3 animations:^{
-        // Move to right
-        self.leadingConstraint.active = false;
-        self.trailingConstraint.active = true;
-
-        // Move to bottom
-        self.topConstraint.active = false;
-        self.bottomConstraint.active = true;
-
-        [self.view setNeedsLayout];
+        if(self.leadingConstraint.priority == UILayoutPriorityDefaultHigh){
+            // Move to right
+            self.leadingConstraint.priority = UILayoutPriorityDefaultLow;
+            self.trailingConstraint.priority = UILayoutPriorityDefaultHigh;
+            
+            // Move to bottom
+            self.topConstraint.priority = UILayoutPriorityDefaultLow;
+            self.bottomConstraint.priority = UILayoutPriorityDefaultHigh;
+        }
+        else{
+            // move back to left
+            self.leadingConstraint.priority = UILayoutPriorityDefaultHigh;
+            self.trailingConstraint.priority = UILayoutPriorityDefaultLow;
+            
+            // Move back to top
+            self.topConstraint.priority = UILayoutPriorityDefaultHigh;
+            self.bottomConstraint.priority = UILayoutPriorityDefaultLow;
+        }
         [self.view layoutIfNeeded];
     }];
 }
