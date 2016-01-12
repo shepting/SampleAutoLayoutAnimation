@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *trailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (nonatomic) BOOL moved;
 
 @end
 
@@ -23,16 +24,18 @@
 - (IBAction)moveButtonTapped:(id)sender {
     [UIView animateWithDuration:0.3 animations:^{
         // Move to right
-        self.leadingConstraint.active = false;
-        self.trailingConstraint.active = true;
+        self.leadingConstraint.active = self.moved;
+        self.trailingConstraint.active = !self.moved;
 
         // Move to bottom
-        self.topConstraint.active = false;
-        self.bottomConstraint.active = true;
+        self.topConstraint.active = self.moved;
+        self.bottomConstraint.active = !self.moved;
 
         [self.view setNeedsLayout];
         [self.view layoutIfNeeded];
     }];
+
+    self.moved = !self.moved;
 }
 
 @end
